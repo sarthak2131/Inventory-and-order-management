@@ -644,8 +644,14 @@ nav.app-sidebar.floating-nav {
 }
 
 .detail-grid,
-.two-column-inputs,
 .detail-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.two-column-inputs {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -787,6 +793,7 @@ nav.app-sidebar.floating-nav {
 
 .table-scroll {
   overflow-x: auto;
+  margin-top: 18px;
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }

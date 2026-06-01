@@ -547,8 +547,8 @@ export default function App() {
       case "dashboard":
       default:
         return {
-          eyebrow: "Overview",
-          title: "Inventory and order management made simple.",
+          eyebrow: "Inventory & Order Management System",
+          title: "Dashboard Overview",
           description: "Manage products, customers, orders, and stock levels from one clean dashboard.",
           metrics: summaryItems
         };
@@ -573,10 +573,10 @@ export default function App() {
         aria-label="Primary"
       >
         <div className="sidebar-brand">
-          <div className="brand-icon">SL</div>
+          <div className="brand-icon">IO</div>
           <div className="brand-text">
-            <span className="eyebrow">Inventory System</span>
-            <strong>StockLedge</strong>
+            <span className="eyebrow">System Console</span>
+            <strong>Inventory & Order Management System</strong>
           </div>
         </div>
 
@@ -612,10 +612,10 @@ export default function App() {
           </button>
 
           <div className="brand-mark">
-            <div className="brand-icon">SL</div>
+            <div className="brand-icon">IO</div>
             <div className="brand-text">
-              <span className="eyebrow">Inventory System</span>
-              <h1>StockLedge</h1>
+              <span className="eyebrow">System Console</span>
+              <h1>Inventory & Order Management System</h1>
             </div>
           </div>
 

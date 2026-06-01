@@ -573,9 +573,7 @@ export default function App() {
         aria-label="Primary"
       >
         <div className="sidebar-brand">
-          <div className="brand-icon">IO</div>
           <div className="brand-text">
-            <span className="eyebrow">System Console</span>
             <strong>Inventory & Order Management System</strong>
           </div>
         </div>
@@ -612,9 +610,7 @@ export default function App() {
           </button>
 
           <div className="brand-mark">
-            <div className="brand-icon">IO</div>
             <div className="brand-text">
-              <span className="eyebrow">System Console</span>
               <h1>Inventory & Order Management System</h1>
             </div>
           </div>

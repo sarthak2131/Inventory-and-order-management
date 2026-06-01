@@ -77,12 +77,12 @@ button {
   top: 12px;
   z-index: 10;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: fit-content;
-  max-width: 90%;
+  width: 100%;
+  max-width: min(1380px, 100%);
   margin: 0 auto clamp(16px, 2vw, 24px);
-  padding: 6px 12px;
+  padding: 10px 24px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
@@ -110,7 +110,9 @@ nav.app-sidebar.floating-nav {
 }
 
 .brand-mark {
-  display: none !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .brand-text {
@@ -224,7 +226,10 @@ nav.app-sidebar.floating-nav {
 }
 
 .brand-mark h1 {
-  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.025em;
 }
 
 .hero-copy h2,
@@ -1317,8 +1322,9 @@ nav.app-sidebar.floating-nav {
   }
 
   .brand-mark h1 {
-    font-size: 1.1rem;
-    line-height: 1.15;
+    font-size: 0.95rem;
+    line-height: 1.25;
+    font-weight: 700;
   }
 
   nav.app-sidebar.floating-nav {

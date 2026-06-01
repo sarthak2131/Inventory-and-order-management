@@ -123,7 +123,82 @@ function LoadingSkeleton() {
   );
 }
 
+function ClipboardIcon() {
+  return (
+    <div className="empty-state-illustration">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ margin: "0 auto 12px" }}>
+        <rect x="18" y="12" width="28" height="38" rx="4" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
+        <path d="M26 8h12a2 2 0 0 1 2 2v2H24v-2a2 2 0 0 1 2-2z" fill="#e2e8f0" stroke="#cbd5e1" strokeWidth="1.5" />
+        <line x1="24" y1="22" x2="40" y2="22" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round" />
+        <line x1="24" y1="28" x2="36" y2="28" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round" />
+        <line x1="24" y1="34" x2="32" y2="34" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="44" cy="44" r="8" fill="#ffffff" stroke="#3b82f6" strokeWidth="2" />
+        <line x1="49.5" y1="49.5" x2="54" y2="54" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+    </div>
+  );
+}
+
+function AllGoodIcon() {
+  return (
+    <div className="empty-state-illustration all-good-illustration">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ margin: "0 auto 12px" }}>
+        <path d="M32 10L12 18v28l20 8 20-8V18L32 10z" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
+        <path d="M12 18l20 8 20-8" stroke="#cbd5e1" strokeWidth="2" />
+        <line x1="32" y1="26" x2="32" y2="54" stroke="#cbd5e1" strokeWidth="2" />
+        <circle cx="44" cy="44" r="10" fill="#22c55e" />
+        <path d="M39 44l3 3 7-7" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
+  );
+}
+
 export default function App() {
+  const getNavIcon = (id, isActive) => {
+    const strokeColor = isActive ? "#3b82f6" : "currentColor";
+    const fillColor = "none";
+    const size = 18;
+    
+    switch (id) {
+      case "dashboard":
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill={fillColor} stroke={strokeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+        );
+      case "products":
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill={fillColor} stroke={strokeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+            <line x1="12" y1="22.08" x2="12" y2="12" />
+          </svg>
+        );
+      case "customers":
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill={fillColor} stroke={strokeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        );
+      case "orders":
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill={fillColor} stroke={strokeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
+
   const [activeSection, setActiveSection] = useState("dashboard");
   const [dashboard, setDashboard] = useState(emptyDashboard);
   const [products, setProducts] = useState([]);
@@ -145,6 +220,84 @@ export default function App() {
   const [isPending, startTransition] = useTransition();
   const lowStockSignatureRef = useRef("");
   const readyToastShownRef = useRef(false);
+
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState(new Date());
+
+  const handlePrevMonth = () => {
+    setCalendarMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setCalendarMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const getCalendarDays = () => {
+    const year = calendarMonth.getFullYear();
+    const month = calendarMonth.getMonth();
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    const days = [];
+
+    const prevYear = month === 0 ? year - 1 : year;
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevDaysCount = new Date(prevYear, prevMonth + 1, 0).getDate();
+
+    for (let i = firstDayIndex - 1; i >= 0; i--) {
+      days.push({
+        date: new Date(prevYear, prevMonth, prevDaysCount - i),
+        isCurrentMonth: false,
+      });
+    }
+
+    for (let i = 1; i <= totalDays; i++) {
+      days.push({
+        date: new Date(year, month, i),
+        isCurrentMonth: true,
+      });
+    }
+
+    const remaining = 42 - days.length;
+    const nextYear = month === 11 ? year + 1 : year;
+    const nextMonth = month === 11 ? 0 : month + 1;
+
+    for (let i = 1; i <= remaining; i++) {
+      days.push({
+        date: new Date(nextYear, nextMonth, i),
+        isCurrentMonth: false,
+      });
+    }
+
+    return days;
+  };
+
+  const getOrdersForDate = (dateObj) => {
+    if (!dateObj) return [];
+    return orders.filter((order) => {
+      const d = new Date(order.created_at);
+      return (
+        d.getFullYear() === dateObj.getFullYear() &&
+        d.getMonth() === dateObj.getMonth() &&
+        d.getDate() === dateObj.getDate()
+      );
+    });
+  };
+
+  const isSameDay = (d1, d2) => {
+    if (!d1 || !d2) return false;
+    return (
+      d1.getDate() === d2.getDate() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getFullYear() === d2.getFullYear()
+    );
+  };
 
   const deferredProductQuery = useDeferredValue(productQuery);
   const deferredCustomerQuery = useDeferredValue(customerQuery);
@@ -586,7 +739,8 @@ export default function App() {
               className={activeSection === item.id ? "nav-pill nav-pill-active" : "nav-pill"}
               onClick={() => handleNavigate(item.id)}
             >
-              {item.label}
+              {getNavIcon(item.id, activeSection === item.id)}
+              <span>{item.label}</span>
             </button>
           ))}
         </div>
@@ -625,7 +779,8 @@ export default function App() {
               className={activeSection === item.id ? "nav-pill nav-pill-active" : "nav-pill"}
               onClick={() => handleNavigate(item.id)}
             >
-              {item.label}
+              {getNavIcon(item.id, activeSection === item.id)}
+              <span>{item.label}</span>
             </button>
           ))}
         </nav>
@@ -658,19 +813,170 @@ export default function App() {
         {initialLoading ? <LoadingSkeleton /> : null}
 
         {!initialLoading && activeSection === "dashboard" ? (
-          <section className="overview-grid">
-            <div className="panel">
+          <>
+            <section className="overview-grid">
+              <section className="panel calendar-panel">
+                <div className="panel-header">
+                  <div className="panel-header-icon-group">
+                    <div className="header-icon-circle calendar-circle">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2>Order Calendar</h2>
+                      <p>Track and view orders by date.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="calendar-split-container">
+                  {/* Left side: Compact Calendar Widget */}
+                  <div className="calendar-widget-wrapper">
+                    <div className="calendar-widget-header">
+                      <button type="button" className="secondary-button icon-button" onClick={handlePrevMonth}>
+                        &larr;
+                      </button>
+                      <span className="calendar-current-month">
+                        <strong>{monthNames[calendarMonth.getMonth()]} {calendarMonth.getFullYear()}</strong>
+                      </span>
+                      <button type="button" className="secondary-button icon-button" onClick={handleNextMonth}>
+                        &rarr;
+                      </button>
+                    </div>
+
+                    <div className="calendar-body">
+                      <div className="calendar-weekdays">
+                        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
+                          <div key={day} className="weekday-label">{day}</div>
+                        ))}
+                      </div>
+
+                      <div className="calendar-grid">
+                        {getCalendarDays().map(({ date, isCurrentMonth }, idx) => {
+                          const dayOrders = getOrdersForDate(date);
+                          const isSelected = isSameDay(date, selectedCalendarDate);
+                          const isToday = isSameDay(date, new Date());
+                          
+                          return (
+                            <button
+                              key={idx}
+                              type="button"
+                              className={`calendar-day${!isCurrentMonth ? " day-outside" : ""}${isSelected ? " day-selected" : ""}${isToday ? " day-today" : ""}${dayOrders.length > 0 ? " day-has-orders" : ""}`}
+                              onClick={() => setSelectedCalendarDate(date)}
+                            >
+                              <span className="day-number">{date.getDate()}</span>
+                              {dayOrders.length > 0 ? (
+                                <span className="day-badge">{dayOrders.length}</span>
+                              ) : null}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right side: Selected Date Orders List */}
+                  <div className="calendar-selected-orders">
+                    <div className="selected-orders-header">
+                      <h3>Orders on {selectedCalendarDate ? selectedCalendarDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" }) : ""}</h3>
+                      <span className="panel-chip">{getOrdersForDate(selectedCalendarDate).length} orders</span>
+                    </div>
+
+                    {getOrdersForDate(selectedCalendarDate).length > 0 ? (
+                      <div className="calendar-orders-list">
+                        {getOrdersForDate(selectedCalendarDate).map(order => (
+                          <div key={order.id} className="calendar-order-card" onClick={() => handleInspectOrder(order.id)} style={{ cursor: "pointer" }}>
+                            <div className="order-card-meta">
+                              <strong>Order #{order.id}</strong>
+                              <span>{order.customer_name.toLowerCase()}</span>
+                              <span className="order-card-time">
+                                {new Date(order.created_at).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
+                              </span>
+                            </div>
+                            <div className="order-card-actions">
+                              <span className="order-price-badge">{formatCurrency(order.total_amount)}</span>
+                              <span className="chevron-arrow">&rsaquo;</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="calendar-empty-state-container">
+                        <ClipboardIcon />
+                        <strong>No orders placed on this date.</strong>
+                        <p>Select a different date to view orders.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+
+              <div className="panel">
+                <div className="panel-header">
+                  <div className="panel-header-icon-group">
+                    <div className="header-icon-circle activity-circle">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                        <polyline points="16 7 22 7 22 13" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2>Latest Order Activity</h2>
+                      <p>Quick access to recently created orders.</p>
+                    </div>
+                  </div>
+                  <span className="panel-chip">{Math.min(orders.length, 5)} shown</span>
+                </div>
+
+                {orders.length ? (
+                  <div className="watchlist recent-orders-list">
+                    {orders.slice(0, 5).map((order) => (
+                      <article
+                        key={order.id}
+                        className="watch-card order-activity-card"
+                        onClick={() => handleInspectOrder(order.id)}
+                      >
+                        <div className="order-card-meta">
+                          <strong>Order #{order.id}</strong>
+                          <span>{order.customer_name.toLowerCase()}</span>
+                        </div>
+                        <div className="order-card-actions">
+                          <span className="order-price-badge">{formatCurrency(order.total_amount)}</span>
+                          <span className="chevron-arrow">&rsaquo;</span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="empty-state">No orders created yet.</p>
+                )}
+              </div>
+            </section>
+
+            {/* Bottom Panel: Low Stock Products (Expanding full width!) */}
+            <div className="panel low-stock-panel">
               <div className="panel-header">
-                <div>
-                  <span className="panel-kicker">Low Stock Products</span>
-                  <h2>Stock alerts</h2>
-                  <p>Products at or below the current low-stock threshold.</p>
+                <div className="panel-header-icon-group">
+                  <div className="header-icon-circle alerts-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h2>Stock Alerts</h2>
+                    <p>Products at or below the current low-stock threshold.</p>
+                  </div>
                 </div>
                 <span className="panel-chip">{lowStockCount} items</span>
               </div>
 
               {dashboard.low_stock_products.length ? (
-                <div className="watchlist">
+                <div className="watchlist low-stock-full-list">
                   {dashboard.low_stock_products.map((product) => (
                     <article key={product.id} className="watch-card">
                       <div>
@@ -682,43 +988,14 @@ export default function App() {
                   ))}
                 </div>
               ) : (
-                <p className="empty-state">No low-stock products right now.</p>
+                <div className="calendar-empty-state-container" style={{ margin: "24px 0" }}>
+                  <AllGoodIcon />
+                  <strong>All good!</strong>
+                  <p>No low-stock products right now.</p>
+                </div>
               )}
             </div>
-
-            <div className="panel">
-              <div className="panel-header">
-                <div>
-                  <span className="panel-kicker">Recent Orders</span>
-                  <h2>Latest order activity</h2>
-                  <p>Quick access to recently created orders.</p>
-                </div>
-                <span className="panel-chip">{Math.min(orders.length, 5)} shown</span>
-              </div>
-
-              {orders.length ? (
-                <div className="watchlist">
-                  {orders.slice(0, 5).map((order) => (
-                    <article key={order.id} className="watch-card">
-                      <div>
-                        <strong>Order #{order.id}</strong>
-                        <span>{order.customer_name}</span>
-                      </div>
-                      <button
-                        type="button"
-                        className="ghost-button"
-                        onClick={() => handleInspectOrder(order.id)}
-                      >
-                        {formatCurrency(order.total_amount)}
-                      </button>
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <p className="empty-state">No orders created yet.</p>
-              )}
-            </div>
-          </section>
+          </>
         ) : null}
 
         {!initialLoading && activeSection === "products" ? (
@@ -868,6 +1145,10 @@ export default function App() {
           </section>
         ) : null}
       </main>
+
+      <footer className="app-footer">
+        <p>&copy; 2026 Inventory & Order Management System. All rights reserved.</p>
+      </footer>
 
       {confirmModal.isOpen ? (
         <div className="confirm-modal-overlay">

@@ -1215,8 +1215,9 @@ nav.app-sidebar.floating-nav {
     box-shadow: none;
     background: transparent;
     backdrop-filter: none;
-    position: static;
-    z-index: auto;
+    position: sticky;
+    top: max(0px, env(safe-area-inset-top, 0px));
+    z-index: 15;
   }
 
   .app-header {
@@ -1227,9 +1228,7 @@ nav.app-sidebar.floating-nav {
     gap: 10px 12px;
     border-radius: 18px;
     padding: 12px 14px;
-    position: sticky;
-    top: max(0px, env(safe-area-inset-top, 0px));
-    z-index: 5;
+    position: static;
     border: 1px solid var(--border);
     box-shadow: 0 10px 30px rgba(16, 24, 40, 0.07);
     background: rgba(255, 255, 255, 0.96);

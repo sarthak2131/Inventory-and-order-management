@@ -132,6 +132,14 @@ nav.app-sidebar.floating-nav {
   background: var(--surface-soft);
   color: var(--text);
   flex-shrink: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle:focus,
+.menu-toggle:active {
+  outline: none;
+  background: var(--surface-muted);
 }
 
 .menu-bars {

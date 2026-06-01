@@ -37,6 +37,16 @@ class Settings(BaseSettings):
             return [item.strip() for item in value.split(",") if item.strip()]
         return value
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def fix_database_url(cls, value: str) -> str:
+        if value and isinstance(value, str):
+            if value.startswith("postgres://"):
+                return value.replace("postgres://", "postgresql+psycopg://", 1)
+            elif value.startswith("postgresql://"):
+                return value.replace("postgresql://", "postgresql+psycopg://", 1)
+        return value
+
 
 @lru_cache
 def get_settings() -> Settings:

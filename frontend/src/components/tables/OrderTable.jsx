@@ -20,7 +20,11 @@ export default function OrderTable({ orders, onInspect, onDelete, selectedOrderI
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id} className={selectedOrderId === order.id ? "active-row" : ""}>
+            <tr
+              key={order.id}
+              className={selectedOrderId === order.id ? "active-row" : ""}
+              onClick={() => onInspect(order.id)}
+            >
               <td data-label="Order">#{order.id}</td>
               <td className="cell-nowrap" data-label="Customer">
                 {order.customer_name}
@@ -31,13 +35,13 @@ export default function OrderTable({ orders, onInspect, onDelete, selectedOrderI
                 {formatDate(order.created_at)}
               </td>
               <td className="table-actions" data-label="Actions">
-                <button type="button" className="ghost-button" onClick={() => onInspect(order.id)}>
-                  Inspect
-                </button>
                 <button
                   type="button"
                   className="ghost-button danger-button"
-                  onClick={() => onDelete(order)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onDelete(order);
+                  }}
                 >
                   Cancel
                 </button>

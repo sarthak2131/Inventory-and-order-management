@@ -832,6 +832,10 @@ nav.app-sidebar.floating-nav {
   white-space: nowrap;
 }
 
+.data-table tbody tr {
+  cursor: pointer;
+}
+
 .data-table tbody tr:hover {
   background: #fafbfd;
 }
@@ -841,7 +845,7 @@ nav.app-sidebar.floating-nav {
 }
 
 .actions-column {
-  width: 150px;
+  width: 90px;
 }
 
 .active-row {

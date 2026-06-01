@@ -150,6 +150,25 @@ export default function App() {
   const deferredCustomerQuery = useDeferredValue(customerQuery);
   const deferredOrderQuery = useDeferredValue(orderQuery);
 
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: null,
+  });
+
+  function requestConfirmation({ title, message, onConfirm }) {
+    setConfirmModal({
+      isOpen: true,
+      title,
+      message,
+      onConfirm: () => {
+        onConfirm();
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+      },
+    });
+  }
+
   function notifySuccess(message) {
     toast.success(message);
   }
@@ -382,51 +401,57 @@ export default function App() {
   }
 
   async function handleDeleteProduct(product) {
-    if (!window.confirm(`Delete product "${product.name}"?`)) {
-      return;
-    }
-
-    try {
-      await deleteProduct(product.id);
-      if (editingProduct?.id === product.id) {
-        setEditingProduct(null);
-      }
-      notifySuccess("Product deleted successfully.");
-      await refreshData();
-    } catch (error) {
-      notifyError(error.message || "Unable to delete product.");
-    }
+    requestConfirmation({
+      title: "Delete Product",
+      message: `Are you sure you want to delete product "${product.name}"? This action cannot be undone.`,
+      onConfirm: async () => {
+        try {
+          await deleteProduct(product.id);
+          if (editingProduct?.id === product.id) {
+            setEditingProduct(null);
+          }
+          notifySuccess("Product deleted successfully.");
+          await refreshData();
+        } catch (error) {
+          notifyError(error.message || "Unable to delete product.");
+        }
+      },
+    });
   }
 
   async function handleDeleteCustomer(customer) {
-    if (!window.confirm(`Delete customer "${customer.full_name}"?`)) {
-      return;
-    }
-
-    try {
-      await deleteCustomer(customer.id);
-      notifySuccess("Customer deleted successfully.");
-      await refreshData();
-    } catch (error) {
-      notifyError(error.message || "Unable to delete customer.");
-    }
+    requestConfirmation({
+      title: "Delete Customer",
+      message: `Are you sure you want to delete customer "${customer.full_name}"? All history for this customer will be removed.`,
+      onConfirm: async () => {
+        try {
+          await deleteCustomer(customer.id);
+          notifySuccess("Customer deleted successfully.");
+          await refreshData();
+        } catch (error) {
+          notifyError(error.message || "Unable to delete customer.");
+        }
+      },
+    });
   }
 
   async function handleDeleteOrder(order) {
-    if (!window.confirm(`Cancel order #${order.id} and restock its items?`)) {
-      return;
-    }
-
-    try {
-      await deleteOrder(order.id);
-      if (selectedOrder?.id === order.id) {
-        setSelectedOrder(null);
-      }
-      notifySuccess("Order canceled and stock restored.");
-      await refreshData({ keepSelection: false });
-    } catch (error) {
-      notifyError(error.message || "Unable to cancel order.");
-    }
+    requestConfirmation({
+      title: "Cancel Order",
+      message: `Are you sure you want to cancel order #${order.id}? This will restock all its items back into the inventory.`,
+      onConfirm: async () => {
+        try {
+          await deleteOrder(order.id);
+          if (selectedOrder?.id === order.id) {
+            setSelectedOrder(null);
+          }
+          notifySuccess("Order canceled and stock restored.");
+          await refreshData({ keepSelection: false });
+        } catch (error) {
+          notifyError(error.message || "Unable to cancel order.");
+        }
+      },
+    });
   }
 
   const filteredProducts = filterProducts(products, deferredProductQuery);
@@ -847,6 +872,31 @@ export default function App() {
           </section>
         ) : null}
       </main>
+
+      {confirmModal.isOpen ? (
+        <div className="confirm-modal-overlay">
+          <div className="confirm-modal-card">
+            <h3>{confirmModal.title}</h3>
+            <p>{confirmModal.message}</p>
+            <div className="confirm-modal-actions">
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+              >
+                No, Keep It
+              </button>
+              <button
+                type="button"
+                className="primary-button danger-button"
+                onClick={confirmModal.onConfirm}
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

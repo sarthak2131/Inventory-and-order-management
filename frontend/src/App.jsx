@@ -815,7 +815,7 @@ export default function App() {
         {!initialLoading && activeSection === "dashboard" ? (
           <>
             <section className="overview-grid">
-              <section className="panel calendar-panel">
+              <div className="panel calendar-panel dashboard-panel">
                 <div className="panel-header">
                   <div className="panel-header-icon-group">
                     <div className="header-icon-circle calendar-circle">
@@ -831,6 +831,9 @@ export default function App() {
                       <p>Track and view orders by date.</p>
                     </div>
                   </div>
+                  <span className="panel-chip panel-chip-placeholder" aria-hidden="true">
+                    &nbsp;
+                  </span>
                 </div>
 
                 <div className="calendar-split-container">
@@ -913,9 +916,9 @@ export default function App() {
                     )}
                   </div>
                 </div>
-              </section>
+              </div>
 
-              <div className="panel">
+              <div className="panel dashboard-panel">
                 <div className="panel-header">
                   <div className="panel-header-icon-group">
                     <div className="header-icon-circle activity-circle">

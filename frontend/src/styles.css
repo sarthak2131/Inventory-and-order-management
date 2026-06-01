@@ -570,13 +570,55 @@ nav.app-sidebar.floating-nav {
 }
 
 .overview-grid {
-  grid-template-columns: 1.62fr 1fr;
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+  align-items: start;
 }
 
-.overview-grid > .panel {
+.overview-grid > .panel,
+.overview-grid > .dashboard-panel {
   display: flex;
   flex-direction: column;
+  margin: 0;
+  align-self: stretch;
+  height: 100%;
+}
+
+.overview-grid .dashboard-panel .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: nowrap;
+  min-height: 76px;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.overview-grid .dashboard-panel .panel-header-icon-group {
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+}
+
+.overview-grid .dashboard-panel .panel-header h2,
+.overview-grid .dashboard-panel .panel-header p {
+  margin: 0;
+}
+
+.overview-grid .dashboard-panel .panel-header p {
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.overview-grid .dashboard-panel .panel-chip {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.overview-grid .panel-chip-placeholder {
+  visibility: hidden;
+  pointer-events: none;
+  min-width: 72px;
 }
 
 .management-grid {
@@ -1111,6 +1153,13 @@ nav.app-sidebar.floating-nav {
     align-items: stretch;
   }
 
+  .overview-grid .dashboard-panel .panel-header {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-height: 76px;
+  }
+
   .watch-card .ghost-button {
     width: 100%;
   }
@@ -1556,7 +1605,7 @@ nav.app-sidebar.floating-nav {
 
 /* Custom Premium Interactive Calendar Styling */
 .calendar-panel {
-  margin-top: 0;
+  margin: 0;
 }
 
 .calendar-compact-stack {
@@ -1879,7 +1928,13 @@ nav.app-sidebar.floating-nav {
   grid-template-columns: 290px minmax(0, 1fr);
   gap: 24px;
   align-items: start;
-  margin-top: 12px;
+  margin-top: 0;
+  flex: 1;
+}
+
+.overview-grid .dashboard-panel .recent-orders-list,
+.overview-grid .dashboard-panel .calendar-split-container {
+  margin-top: 0;
 }
 
 .calendar-empty-state-container {

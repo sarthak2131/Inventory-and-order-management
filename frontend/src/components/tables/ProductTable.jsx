@@ -19,10 +19,10 @@ export default function ProductTable({ products, onEdit, onDelete }) {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product.id}>
-              <td data-label="Product">{product.name}</td>
-              <td data-label="SKU">{product.sku}</td>
-              <td data-label="Price">{formatCurrency(product.price)}</td>
+            <tr key={product.id} onClick={() => onEdit(product)}>
+              <td data-label="Product" className="row-title">{product.name}</td>
+              <td data-label="SKU"><span className="sku-tag">{product.sku}</span></td>
+              <td data-label="Price" className="price-cell">{formatCurrency(product.price)}</td>
               <td data-label="Stock">
                 <span
                   className={`pill ${
@@ -33,13 +33,23 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                 </span>
               </td>
               <td className="table-actions" data-label="Actions">
-                <button type="button" className="ghost-button" onClick={() => onEdit(product)}>
+                <button
+                  type="button"
+                  className="ghost-button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onEdit(product);
+                  }}
+                >
                   Edit
                 </button>
                 <button
                   type="button"
                   className="ghost-button danger-button"
-                  onClick={() => onDelete(product)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onDelete(product);
+                  }}
                 >
                   Delete
                 </button>

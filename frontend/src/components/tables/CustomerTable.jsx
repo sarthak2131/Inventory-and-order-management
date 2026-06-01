@@ -17,14 +17,17 @@ export default function CustomerTable({ customers, onDelete }) {
         <tbody>
           {customers.map((customer) => (
             <tr key={customer.id}>
-              <td data-label="Name">{customer.full_name}</td>
+              <td data-label="Name" className="row-title">{customer.full_name}</td>
               <td data-label="Email">{customer.email}</td>
               <td data-label="Phone">{customer.phone_number}</td>
               <td className="table-actions" data-label="Actions">
                 <button
                   type="button"
                   className="ghost-button danger-button"
-                  onClick={() => onDelete(customer)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onDelete(customer);
+                  }}
                 >
                   Delete
                 </button>

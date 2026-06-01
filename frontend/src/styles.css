@@ -809,16 +809,19 @@ nav.app-sidebar.floating-nav {
 
 .data-table th,
 .data-table td {
-  padding: 12px 8px;
+  padding: 14px 12px;
   border-bottom: 1px solid var(--border);
   text-align: left;
 }
 
 .data-table th {
   color: var(--muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  background: var(--surface-soft);
+  border-bottom: 2px solid var(--border);
 }
 
 .data-table .ghost-button {
@@ -834,10 +837,15 @@ nav.app-sidebar.floating-nav {
 
 .data-table tbody tr {
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .data-table tbody tr:hover {
-  background: #fafbfd;
+  background: rgba(59, 130, 246, 0.03) !important;
+}
+
+.data-table tbody tr:active {
+  background: rgba(59, 130, 246, 0.06) !important;
 }
 
 .data-table td::before {
@@ -849,7 +857,37 @@ nav.app-sidebar.floating-nav {
 }
 
 .active-row {
-  background: #f3f7ff;
+  background: #f0f6ff !important;
+  border-left: 3px solid var(--blue);
+}
+
+/* Premium mono-spaced look for SKUs and IDs! */
+.sku-tag {
+  display: inline-block;
+  font-family: "SF Mono", "Fira Code", Consolas, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--surface-muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Premium typography for name columns */
+.row-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+/* Bold premium pricing cell */
+.price-cell {
+  font-family: "Segoe UI", sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.92rem;
 }
 
 .pill-amber {

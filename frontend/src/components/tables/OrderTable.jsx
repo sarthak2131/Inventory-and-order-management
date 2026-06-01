@@ -25,12 +25,12 @@ export default function OrderTable({ orders, onInspect, onDelete, selectedOrderI
               className={selectedOrderId === order.id ? "active-row" : ""}
               onClick={() => onInspect(order.id)}
             >
-              <td data-label="Order">#{order.id}</td>
-              <td className="cell-nowrap" data-label="Customer">
+              <td data-label="Order"><span className="sku-tag">#{order.id}</span></td>
+              <td className="cell-nowrap row-title" data-label="Customer">
                 {order.customer_name}
               </td>
               <td data-label="Items">{order.items.length}</td>
-              <td data-label="Total">{formatCurrency(order.total_amount)}</td>
+              <td data-label="Total" className="price-cell">{formatCurrency(order.total_amount)}</td>
               <td className="cell-nowrap" data-label="Created">
                 {formatDate(order.created_at)}
               </td>

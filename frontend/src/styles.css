@@ -571,6 +571,12 @@ nav.app-sidebar.floating-nav {
 
 .overview-grid {
   grid-template-columns: 1.62fr 1fr;
+  align-items: stretch;
+}
+
+.overview-grid > .panel {
+  display: flex;
+  flex-direction: column;
 }
 
 .management-grid {
@@ -613,6 +619,7 @@ nav.app-sidebar.floating-nav {
   background: var(--surface);
   padding: clamp(16px, 2.5vw, 22px);
   min-width: 0;
+  margin: 0;
 }
 
 .panel-header {
@@ -1549,7 +1556,7 @@ nav.app-sidebar.floating-nav {
 
 /* Custom Premium Interactive Calendar Styling */
 .calendar-panel {
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .calendar-compact-stack {

@@ -469,6 +469,69 @@ export default function App() {
     },
   ];
 
+  const getHeroContent = () => {
+    switch (activeSection) {
+      case "products":
+        return {
+          eyebrow: "Catalog",
+          title: "Product Catalog & Inventory",
+          description: "Create, search, and update your products. Keep track of stock levels and ensure SKU uniqueness.",
+          metrics: [
+            summaryItems[0],
+            {
+              label: "Low Stock Alert",
+              value: lowStockCount,
+              helper: "items needing restock",
+              tag: lowStockCount > 0 ? "needs attention" : "all safe",
+              accent: lowStockCount > 0 ? "amber" : "teal",
+            }
+          ]
+        };
+      case "customers":
+        return {
+          eyebrow: "Buyers",
+          title: "Customer Records & Directory",
+          description: "Manage customer profiles, emails, and contact details. Check history and look up records.",
+          metrics: [
+            summaryItems[1],
+            {
+              label: "Active Buyers",
+              value: customers.length,
+              helper: "registered accounts",
+              tag: "database synced",
+              accent: "blue",
+            }
+          ]
+        };
+      case "orders":
+        return {
+          eyebrow: "Ledger",
+          title: "Order Placement & Tracking",
+          description: "Dispatch new orders with automated stock validation. Review details or cancel and restore stock.",
+          metrics: [
+            summaryItems[2],
+            {
+              label: "Total Sales",
+              value: formatCurrency(orders.reduce((sum, order) => sum + Number(order.total_amount), 0)),
+              helper: "order sales total",
+              tag: `${orders.length} sales`,
+              accent: "violet",
+            }
+          ]
+        };
+      case "dashboard":
+      default:
+        return {
+          eyebrow: "Overview",
+          title: "Inventory and order management made simple.",
+          description: "Manage products, customers, orders, and stock levels from one clean dashboard.",
+          metrics: summaryItems
+        };
+    }
+  };
+
+  const heroContent = getHeroContent();
+
   return (
     <div className={`app-shell${menuOpen ? " menu-open" : ""}`}>
       <button
@@ -550,16 +613,13 @@ export default function App() {
       <main className="content-shell">
         <section className="hero-panel">
           <div className="hero-copy">
-            <span className="eyebrow">Overview</span>
-            <h2>Inventory and order management made simple.</h2>
-            <p>
-              Manage products, customers, orders, and stock levels from one clean dashboard built
-              around the core assessment requirements.
-            </p>
+            <span className="eyebrow">{heroContent.eyebrow}</span>
+            <h2>{heroContent.title}</h2>
+            <p>{heroContent.description}</p>
           </div>
 
           <div className="hero-metrics">
-            {summaryItems.map((item) => (
+            {heroContent.metrics.map((item) => (
               <SummaryCard
                 key={item.label}
                 label={item.label}

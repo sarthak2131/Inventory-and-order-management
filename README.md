@@ -1,4 +1,4 @@
-# 🌐 Enterprise Inventory & Order Management System (IOMS)
+# 🌐 Inventory & Order Management System (IOMS)
 
 A high-performance, containerized, and responsive full-stack enterprise application designed to streamline product inventory tracking, customer profiles, and intelligent order processing. 
 

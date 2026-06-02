@@ -457,15 +457,6 @@ export default function App() {
       return;
     }
 
-    if (!readyToastShownRef.current) {
-      readyToastShownRef.current = true;
-      if (dashboard.low_stock_products.length) {
-        notifyInfo("Notifications are active. Low-stock products need attention.");
-      } else {
-        notifyInfo("Notifications are active. Add or update data to see live alerts.");
-      }
-    }
-
     const signature = dashboard.low_stock_products
       .map((product) => `${product.id}:${product.quantity_in_stock}`)
       .join("|");

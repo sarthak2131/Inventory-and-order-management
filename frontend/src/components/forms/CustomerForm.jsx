@@ -61,7 +61,7 @@ export default function CustomerForm({ onSubmit, submitting }) {
           id="full_name"
           name="full_name"
           type="text"
-          placeholder="Jordan Lee"
+          placeholder="Aarav Sharma"
           value={formState.full_name}
           onChange={handleChange}
         />
@@ -74,7 +74,7 @@ export default function CustomerForm({ onSubmit, submitting }) {
           id="email"
           name="email"
           type="email"
-          placeholder="jordan@example.com"
+          placeholder="aarav@example.com"
           value={formState.email}
           onChange={handleChange}
         />
@@ -87,7 +87,7 @@ export default function CustomerForm({ onSubmit, submitting }) {
           id="phone_number"
           name="phone_number"
           type="tel"
-          placeholder="+1 555 0149"
+          placeholder="+91 98765 43210"
           value={formState.phone_number}
           onChange={handleChange}
         />

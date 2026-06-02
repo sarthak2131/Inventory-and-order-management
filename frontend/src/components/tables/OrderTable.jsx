@@ -22,7 +22,7 @@ export default function OrderTable({ orders, onInspect, onDelete, selectedOrderI
           {orders.map((order) => (
             <tr
               key={order.id}
-              className={selectedOrderId === order.id ? "active-row" : ""}
+              className={`clickable-row ${selectedOrderId === order.id ? "active-row" : ""}`}
               onClick={() => onInspect(order.id)}
             >
               <td data-label="Order"><span className="sku-tag">#{order.id}</span></td>

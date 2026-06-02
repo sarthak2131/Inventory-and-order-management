@@ -19,7 +19,7 @@ export default function ProductTable({ products, onEdit, onDelete }) {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product.id} onClick={() => onEdit(product)}>
+            <tr key={product.id} className="clickable-row" onClick={() => onEdit(product)}>
               <td data-label="Product" className="row-title">{product.name}</td>
               <td data-label="SKU"><span className="sku-tag">{product.sku}</span></td>
               <td data-label="Price" className="price-cell">{formatCurrency(product.price)}</td>
